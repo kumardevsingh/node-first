@@ -22,16 +22,16 @@ const url = 'mongodb+srv://singhkumardev:DevAnju@nodedev.igsft.mongodb.net/direc
 const client = new MongoClient(url);
 const dataBase = 'products';
 
-async function getData() {
+async function dbConnection() {
     let result = await client.connect();
     let db = result.db(dataBase);
     let collection = db.collection('users')
-    let res = await collection.find({}).toArray()
-    console.log("====== DATA BASE collection===== >", res)
+    let res = await collection.find({ email: 'abc4@abc.com' }).toArray()
+    console.log("====== DATA BASE collection===== >", res);
 }
 
 
-getData();
+dbConnection();
 
 
 /* 
