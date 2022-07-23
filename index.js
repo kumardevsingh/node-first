@@ -16,28 +16,25 @@ http.createServer((req, res) => {
 
 
 /* USING EXPRESS-JS CREATE A NODE SERVER */
-const { MongoClient } = require('mongodb');
-const url = 'mongodb+srv://singhkumardev:DevAnju@nodedev.igsft.mongodb.net/directConnection=true&retryWrites=true&w=majority';
-
-const client = new MongoClient(url);
-const dataBase = 'products';
-
-async function dbConnect() {
-    let result = await client.connect();
-    let db = result.db(dataBase);
-    return db.collection('users')
-    //let collection = db.collection('users')
-    //let res = await collection.find({ email: 'abc4@abc.com' }).toArray()
-    //console.log("====== DATA BASE collection===== >", res);
-}
+const express = require('express');
+const dbConnect = require('./mongodb');
+const app = express();
 
 
-dbConnect().then((res) => {
+/* dbConnect().then((res) => {
     res.find().toArray().then((data) => {
         console.log("Finally get data =====>", data)
     })
 })
+ */
 
+const main = async () => {
+    let data = await dbConnect();
+    data = await data.find().toArray();
+    console.warn("GET THE DATA:===== ", data)
+}
+
+main();
 
 /* 
 //const mongoose = require('mongoose');
@@ -51,15 +48,22 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (res)
 
 
 
-const express = require('express');
-const app = express();
 
-app.get('/', (req, res) => {
+
+
+
+/* app.get('/', (req, res) => {
 
     //res.send('200', "page  load from server");
 
     res.end()
-})
+}) */
+
+
+
+
+
+
 app.listen(1000, () => { console.log('app is listing on port no 1000') })
 
 
